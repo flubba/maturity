@@ -1,0 +1,37 @@
+{
+  "name": "maturity",
+  "version": "1.0.0",
+  "description": "A local, branch-less dependency updater with a safety release delay.",
+  "type": "module",
+  "bin": {
+    "maturity": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc && chmod +x dist/index.js",
+    "test": "bun test",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "updater",
+    "dependencies",
+    "npm",
+    "maturity",
+    "safe",
+    "local"
+  ],
+  "author": "Florian Bartels-Oks (atkuva GmbH)",
+  "license": "MIT",
+  "dependencies": {
+    "compare-versions": "^6.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.41",
+    "tsx": "^4.22.4",
+    "typescript": "^5.9.3"
+  }
+}
