@@ -1,6 +1,6 @@
 {
   "name": "maturity",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A local, branch-less dependency updater with a safety release delay.",
   "type": "module",
   "bin": {
@@ -30,8 +30,8 @@
     "compare-versions": "^6.1.1"
   },
   "devDependencies": {
-    "@types/node": "^20.19.41",
+    "@types/node": "^25.9.1",
     "tsx": "^4.22.4",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   }
 }

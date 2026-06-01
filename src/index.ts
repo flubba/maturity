@@ -32,7 +32,7 @@ export class MaturityCore {
     return response.json();
   }
 
-  async getUpgradeInfo(packageName: string, currentRange: string): Promise<PackageInfo | null> {
+  async getUpgradeInfo(packageName: string, currentRange: string, allowMajor: boolean = false): Promise<PackageInfo | null> {
     const data = await this.fetchPackageMetadata(packageName);
     if (!data || !data.time || !data.versions) return null;
 
@@ -64,6 +64,11 @@ export class MaturityCore {
         }
       }
     }
+
+    if (allowMajor && newestMajor) {
+      return { bestMinorPatch: newestMajor, newestMajor };
+    }
+
     return { bestMinorPatch, newestMajor };
   }
 }
@@ -74,6 +79,7 @@ export class MaturityCore {
 export async function runCli() {
   const args = process.argv.slice(2);
   const daysArg = args.find(arg => arg.startsWith("--days="));
+  const allowMajor = args.includes("--major");
   const delayDays = daysArg ? parseInt(daysArg.split("=")[1], 10) : 1;
 
   if (isNaN(delayDays)) {
@@ -81,7 +87,8 @@ export async function runCli() {
     process.exit(1);
   }
 
-  console.log(`maturity v1.0.0 - Using ${delayDays} day(s) release delay safety.`);
+  console.log(`maturity v1.0.1 - Using ${delayDays} day(s) release delay safety.`);
+  if (allowMajor) console.log("Major upgrades are ENABLED.");
 
   const core = new MaturityCore(delayDays);
   const pkgPath = path.join(process.cwd(), "package.json");
@@ -104,7 +111,7 @@ export async function runCli() {
     
     for (const [name, range] of Object.entries(pkg[section])) {
       process.stdout.write(`  ${name}... `);
-      const info = await core.getUpgradeInfo(name, range as string);
+      const info = await core.getUpgradeInfo(name, range as string, allowMajor);
       
       if (info) {
         if (info.bestMinorPatch) {

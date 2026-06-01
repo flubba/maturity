@@ -96,4 +96,22 @@ describe("MaturityCore Unit Tests", () => {
     // Should NOT find 1.1.0 because it's only 0.5 days old
     expect(info?.bestMinorPatch).toBeNull();
   });
+
+  test("should include major version in bestMinorPatch if allowMajor is true", async () => {
+    const core = new MaturityCore(1, FIXED_NOW);
+
+    spyOn(core, "fetchPackageMetadata").mockImplementation(async () => ({
+      time: {
+        "1.0.0": new Date(FIXED_NOW - 10 * ONE_DAY_MS).toISOString(),
+        "2.0.0": new Date(FIXED_NOW - 5 * ONE_DAY_MS).toISOString(),
+      },
+      versions: {
+        "1.0.0": {},
+        "2.0.0": {}
+      }
+    }));
+
+    const info = await core.getUpgradeInfo("test-pkg", "^1.0.0", true); // allowMajor = true
+    expect(info?.bestMinorPatch).toBe("2.0.0");
+  });
 });

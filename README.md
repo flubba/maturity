@@ -17,7 +17,8 @@ In recent years, the npm ecosystem has seen an increase in **supply-chain attack
 - **Local-first**: No remote platform required.
 - **Safety Delay**: Only updates to versions at least 1 day old (default).
 - **Customizable**: Use `--days=N` to change the safety window.
-- **Major Safety**: Automatically stays within the same major version to avoid breaking changes.
+- **Major Upgrades**: Optional support for major versions via `--major`.
+- **Major Safety**: Automatically stays within the same major version by default.
 - **Major Reporting**: Shows you available major upgrades at the end of the run.
 - **Peer Dependency Friendly**: Uses `--legacy-peer-deps` to handle complex dependency trees.
 
@@ -45,6 +46,14 @@ To use a 3-day delay instead of the default 1 day:
 
 ```bash
 maturity --days=3
+```
+
+### Allowing Major Upgrades
+
+By default, `maturity` only suggests minor and patch updates. To allow major upgrades (e.g., v5 -> v6):
+
+```bash
+maturity --major
 ```
 
 ## Integration in package.json
