@@ -1,6 +1,6 @@
 {
   "name": "maturity",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A local, branch-less dependency updater with a safety release delay.",
   "type": "module",
   "bin": {
@@ -12,7 +12,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsc && chmod +x dist/index.js",
+    "build": "tsc && VERSION=$(node -e \"import fs from 'fs'; console.log(JSON.parse(fs.readFileSync('./package.json')).version)\") && sed -i '' \"s/__VERSION__/$VERSION/g\" dist/index.js && echo '#!/usr/bin/env node' | cat - dist/index.js > dist/index.tmp.js && mv dist/index.tmp.js dist/index.js && chmod +x dist/index.js",
     "test": "bun test",
     "prepublishOnly": "npm run build"
   },

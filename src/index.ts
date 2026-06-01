@@ -87,7 +87,7 @@ export async function runCli() {
     process.exit(1);
   }
 
-  console.log(`maturity v1.0.1 - Using ${delayDays} day(s) release delay safety.`);
+  console.log(`maturity v__VERSION__ - Using ${delayDays} day(s) release delay safety.`);
   if (allowMajor) console.log("Major upgrades are ENABLED.");
 
   const core = new MaturityCore(delayDays);
