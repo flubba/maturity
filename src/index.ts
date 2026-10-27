@@ -155,6 +155,8 @@ export async function runCli() {
     console.log("------------------------------------------");
     console.log("\nTo upgrade to a major version manually, run:");
     console.log("npm install <package>@latest --legacy-peer-deps");
+    console.log("\nOr use the --major flag to automate all major upgrades:");
+    console.log("maturity --major");
   }
 }
 
